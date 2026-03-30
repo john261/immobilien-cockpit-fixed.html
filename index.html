@@ -591,8 +591,8 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    z-index: 2;
-    opacity: 0.55;
+    z-index: 20;
+    opacity: 0.92;
     pointer-events: none;
   }
 </style>
@@ -930,11 +930,12 @@
     kill(w, h) {
       if (!this.isKilled) {
         const rx = Math.random()*w, ry = Math.random()*h;
-        const dx = rx - w/2, dy = ry - h/2;
+        const cx = w/2, cy = h * 0.22;
+        const dx = rx - cx, dy = ry - cy;
         const m = Math.sqrt(dx*dx + dy*dy) || 1;
         const mag = (w+h)/2;
-        this.target.x = w/2 + (dx/m)*mag;
-        this.target.y = h/2 + (dy/m)*mag;
+        this.target.x = cx + (dx/m)*mag;
+        this.target.y = cy + (dy/m)*mag;
         this.startColor = {
           r: this.startColor.r + (this.targetColor.r - this.startColor.r)*this.colorWeight,
           g: this.startColor.g + (this.targetColor.g - this.startColor.g)*this.colorWeight,
@@ -958,10 +959,11 @@
 
   function rndPos(w, h) {
     const rx = Math.random()*w, ry = Math.random()*h;
-    const dx = rx - w/2, dy = ry - h/2;
+    const cx = w/2, cy = h * 0.22;
+    const dx = rx - cx, dy = ry - cy;
     const m = Math.sqrt(dx*dx + dy*dy) || 1;
     const mag = (w+h)/2;
-    return { x: w/2 + (dx/m)*mag, y: h/2 + (dy/m)*mag };
+    return { x: cx + (dx/m)*mag, y: cy + (dy/m)*mag };
   }
 
   function nextWord(word) {
@@ -974,7 +976,7 @@
     octx.font = `bold ${fontSize}px 'Cormorant Garamond', serif`;
     octx.textAlign = 'center';
     octx.textBaseline = 'middle';
-    octx.fillText(word, w/2, h/2);
+    octx.fillText(word, w/2, h * 0.22);
     const data = octx.getImageData(0, 0, w, h).data;
 
     const newColor = COLORS[colorIdx % COLORS.length];
